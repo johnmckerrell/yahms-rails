@@ -9,6 +9,7 @@ class CreateBaseStations < ActiveRecord::Migration
       t.timestamps
     end
     add_index :base_stations, [ :system_id ]
+    add_index :base_stations, [ :mac_address ], :unique => true
   end
 
   def self.down

@@ -1,0 +1,35 @@
+<%
+@analog_pins = get_pins(@analog_inputs, "A")
+@output_pins = get_pins(@digital_outputs, "O")
+@output_hash = {}
+@digital_outputs.each do |o|
+  @output_hash[o.id] = o.id
+end
+-%>
+YAHMS
+A:<%=@analog_pins.join(",")%>
+O:<%=@output_pins.join(",")%>
+<%
+if @base_station.xbee_rx_pin and @base_station.xbee_tx_pin
+-%>
+X:<%=@base_station.xbee_rx_pin%>,<%=@base_station.xbee_tx_pin%>
+<%
+end
+-%>
+<%
+@control_blocks.each do |cb|
+  # Check that the output hasn't been deactivated
+  if @output_hash[cb.digital_output_id]
+-%>
+<%=cb.to_api%>
+<%
+  end
+end
+
+if @base_station.timezone and @base_station.timezone != ""
+  Time.zone = @base_station.timezone
+-%>
+S:<%=Time.now.utc_offset/60 %>
+<%
+end
+-%>

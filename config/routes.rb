@@ -40,6 +40,7 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   #map.connect ':controller/:action/:id'
   #map.connect ':controller/:action/:id.:format'
+  map.api_config 'api/c/:mac/:version/:timestamp', :controller => 'api', :action => 'config'
   map.resource :account, :controller => "users"
   map.resources :users
   map.resource :user_session
