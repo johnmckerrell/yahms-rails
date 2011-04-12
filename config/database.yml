@@ -19,6 +19,6 @@ test:
 production:
   adapter: mysql
   database: yahms_net_production
-  username: apass
+  username: yahms
   password: dD31e27p[:BJ
 
