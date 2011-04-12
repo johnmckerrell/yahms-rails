@@ -6,7 +6,7 @@ class CreateDigitalOutputs < ActiveRecord::Migration
       t.references :base_station, :type, :null => false
       t.timestamps
     end
-    add_index :digital_outputs, [ :base_station_id, :deactivated_at, :type_id ]
+    add_index :digital_outputs, [ :base_station_id, :deactivated_at, :type_id ], :name => "base_station_id"
   end
 
   def self.down

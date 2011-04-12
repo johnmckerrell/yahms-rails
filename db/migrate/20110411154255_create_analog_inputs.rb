@@ -8,7 +8,7 @@ class CreateAnalogInputs < ActiveRecord::Migration
       t.datetime :deactivated_at
       t.timestamps
     end
-    add_index :analog_inputs, [ :base_station_id, :deactivated_at, :type_id ]
+    add_index :analog_inputs, [ :base_station_id, :deactivated_at, :type_id ], :name => "base_station_id"
   end
 
   def self.down
