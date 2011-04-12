@@ -27,9 +27,10 @@ end
 end
 
 if @base_station.timezone and @base_station.timezone != ""
-  Time.zone = @base_station.timezone
+  #Time.zone = @base_station.timezone
+#S:<%=Time.now.utc_offset/60 % >
 -%>
-S:<%=Time.now.utc_offset/60 %>
+S:<%=@base_station.timezone%>
 <%
 end
 -%>
