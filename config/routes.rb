@@ -41,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   #map.connect ':controller/:action/:id'
   #map.connect ':controller/:action/:id.:format'
   map.api_config 'api/c/:mac/:version/:timestamp', :controller => 'api', :action => 'config'
+  map.api_submit 'api/s/:mac/:version', :controller => 'api', :action => 'submit'
   map.resource :account, :controller => "users"
   map.resources :users
   map.resource :user_session

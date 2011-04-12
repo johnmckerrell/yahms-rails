@@ -6,6 +6,7 @@ class InitialTypes < ActiveRecord::Migration
     DigitalOutputType.create( :code => "lighting", :title => "Lighting")
     AnalogInputType.create( :code => "temperature", :title => "Temperature Probe" )
     AnalogInputType.create( :code => "power", :title => "Power Monitor" )
+    AnalogInputType.create( :code => "xbeeauto", :title => "Xbee Auto" )
   end
 
   def self.down
@@ -13,5 +14,6 @@ class InitialTypes < ActiveRecord::Migration
     DigitalOutputType.find_by_code( "lighting" ).destroy
     AnalogInputType.find_by_code( "temperature" ).destroy
     AnalogInputType.find_by_code( "power" ).destroy
+    AnalogInputType.find_by_code( "xbeeauto" ).destroy
   end
 end
