@@ -27,10 +27,12 @@ end
 end
 
 if @base_station.timezone and @base_station.timezone != ""
-  #Time.zone = @base_station.timezone
-#S:<%=Time.now.utc_offset/60 % >
+  tz = TZInfo::Timezone.get(@base_station.timezone)
+  now = Time.now
+  local = tz.utc_to_local(now)
+  offset = ( local.to_i - now.to_i ) / 60
 -%>
-S:<%=@base_station.timezone%>
+S:<%=offset%>
 <%
 end
 -%>
