@@ -25,7 +25,7 @@
   @logs.each do |l|
 %>
   <tr>
-    <td><%=l[:human_value].round%>&deg;C</td>
+    <td><%=l[:human_value].round(1)%>&deg;C</td>
     <td><%=l[:value]%></td>
     <td><%=l[:created_at]%></td>
 <%
