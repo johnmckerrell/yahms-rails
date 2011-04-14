@@ -15,6 +15,11 @@
   </thead>
   <tbody>
 <%
+  tz = Time.zone
+  if @analog_input.base_station.timezone and @analog_input.base_station.timezone != ""
+    tz = TZInfo::Timezone.get(@analog_input.base_station.timezone)
+                  t = tz.utc_to_local(t)
+  end
   if @logs.length == 0
 %>
     <tr>
@@ -27,7 +32,7 @@
   <tr>
     <td><%=l[:human_value].round(1)%>&deg;C</td>
     <td><%=l[:value]%></td>
-    <td><%=l[:created_at]%></td>
+    <td><%=tz.utc_to_local(l[:created_at])%></td>
 <%
   end
 %>
