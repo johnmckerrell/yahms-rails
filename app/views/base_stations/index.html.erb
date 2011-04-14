@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>MAC Address</th>
+      <th>Time Zone</th>
+    </tr>
+  </thead>
+<% if @base_stations.length == 0 %>
+  <tr>
+    <td colspan="100" class="noresults">No Base Stations found</td>
+  </tr>
+<% end %>
+<% @base_stations.each do |bs| %>
+  <tr>
+    <td><%= h(bs.name) %></td>
+    <td><%= h(bs.mac_address) %></td>
+    <td><%= h(bs.timezone) %></td>
+    <td><%= link_to "Digital Outputs", digital_outputs_path(:base_station_id => bs.id) %></td>
+    <td><%= link_to "Analog Inputs", analog_inputs_path(:base_station_id => bs.id) %></td>
+  </tr>
+<% end %>

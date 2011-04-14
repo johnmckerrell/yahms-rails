@@ -1,0 +1,8 @@
+<ul>
+<% if @systems.length == 0 %>
+  <li class="noresults">No systems found</li>
+<% end %>
+<% @systems.each do |s| %>
+  <li><%= link_to s.name, base_stations_path(:system_id => s.id) %>
+<% end %>
+</ul>
