@@ -44,6 +44,7 @@ ActionController::Routing::Routes.draw do |map|
   map.api_submit 'api/s/:mac/:version', :controller => 'api', :action => 'submit'
   map.resource :account, :controller => "users"
   map.resources :users, :systems, :base_stations, :analog_inputs, :digital_outputs
+  map.resources :digital_outputs, :member => { :plus_time => :put, :advance => :put }
   map.resource :user_session
   map.root :controller => "user_sessions", :action => "new"
 end

@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+<% if @digital_outputs.length == 0 %>
+  <tr>
+    <td colspan="100" class="noresults">No Digital Outputs found</td>
+  </tr>
+<% end %>
+<% @digital_outputs.each do |o| %>
+  <tr>
+    <td><%= link_to h(o.name), digital_output_path(o.id) %></td>
+    <td><%= h(o.address) %></td>
+    <td><%= h(o.type.title) %></td>
+  </tr>
+<% end %>
