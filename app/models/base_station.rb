@@ -4,6 +4,18 @@ class BaseStation < ActiveRecord::Base
   has_many :control_blocks
   has_many :digital_outputs
 
+  def current_time
+    t = Time.now
+    tz = nil
+    if timezone and timezone != ""
+      tz = TZInfo::Timezone.get(timezone)
+    end
+    if tz
+      t = tz.utc_to_local(t)
+    end
+    t = ArduinoTime.at(t)
+  end
+
   def auto_create_input(address)
     matches = address.match(/^X\d+P\d+$/)
     input = nil

@@ -1,6 +1,7 @@
 <ul>
   <li>Name: <%=h(@digital_output.name)%></li>
   <li>Address: <%=h(@digital_output.address)%></li>
+  <li>Current State: <%=@digital_output.current_state ? "ON" : "OFF" %></li>
   <li>Transient Control Block: <%= @digital_output.transient_control_block ? @digital_output.transient_control_block.to_api : "- none -" %></li>
 </ul>
 

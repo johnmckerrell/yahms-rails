@@ -1,5 +1,6 @@
 class DigitalOutputsController < ApplicationController
   before_filter :require_user
+  before_filter :load_digital_output, :except => [ :new, :create ]
   
   def new
     @digital_output = DigitalOutput.new
@@ -16,11 +17,6 @@ class DigitalOutputsController < ApplicationController
   end
   
   def show
-    @digital_output = DigitalOutput.find(params[:id])
-    @system = System.find_authorized_system(@digital_output.base_station.system_id, current_user.id)
-    if @system.nil?
-      @digital_output = nil
-    end
   end
 
   def edit
@@ -28,46 +24,93 @@ class DigitalOutputsController < ApplicationController
   end
   
   def advance
-    @digital_output = DigitalOutput.find(params[:id])
-    @system = System.find_authorized_system(@digital_output.base_station.system_id, current_user.id)
-    if @system.nil?
-      @digital_output = nil
-    end
-
     # Check what's currently happening
+    active_blocks = @digital_output.active_control_blocks
+    state = @digital_output.state_for_blocks(active_blocks)
+    new_state = state
 
     # Delete existing transient block
+    if @digital_output.transient_control_block
+      @digital_output.transient_control_block.destroy
+      active_blocks = @digital_output.active_control_blocks
+      new_state = @digital_output.state_for_blocks(active_blocks)
+    end
 
     # Create new transient block if necessary
+    t = @digital_output.base_station.current_time
+    if new_state != state
+      # We've already switched, nothing else to do
+    elsif state
+      # If on then we need an "off" control block to last to the end
+      end_time = nil
+      active_blocks.each do |cb|
+        block_end_time = cb.current_end_time
+        if end_time.nil? or block_end_time > end_time
+          end_time = block_end_time
+        end
+      end
+      # There really shouldn't be no end time
+      if end_time
+        transient_block = ControlBlock.new(
+          :len => params[:minutes].to_i,
+          :state => false,
+          :base_station_id => @digital_output.base_station_id,
+          :digital_output_id => @digital_output.id )
+        transient_block.set_start_and_end_time(t, end_time)
+        transient_block.save!
+        @digital_output.transient_control_block = transient_block
+        @digital_output.save!
+      end
+    else
+      # If off then we need to find the next start time for each block
+      next_start_time = nil
+      day_times = [ t, ArduinoTime.at((t+1.day).midnight) ]
+      today_blocks = @digital_output.valid_day_blocks(day_times[0])
+      tomorrow_blocks = @digital_output.valid_day_blocks(day_times[1])
+      day_blocks = [ today_blocks, tomorrow_blocks ]
+      day_blocks.each_index do |i|
+        blocks = day_blocks[i]
+        blocks.each do |cb|
+          block_start_time = cb.next_start_time(day_times[i])
+          if block_start_time and ( next_start_time.nil? or block_start_time < next_start_time )
+            next_start_time = block_start_time
+          end
+        end
+        if next_start_time
+          break
+        end
+      end
+      # If there's no start time then there's no valid blocks left
+      # today or tomorrow so not much we can do
+      if next_start_time
+        transient_block = ControlBlock.new(
+          :len => params[:minutes].to_i,
+          :state => true,
+          :base_station_id => @digital_output.base_station_id,
+          :digital_output_id => @digital_output.id )
+        transient_block.set_start_and_end_time(t,next_start_time)
+        transient_block.save!
+        @digital_output.transient_control_block = transient_block
+        @digital_output.save!
+      end
+    end
+    redirect_to digital_output_url(:id => @digital_output.id, :minutes => params[:minutes]) 
   end
 
   def plus_time
-    @digital_output = DigitalOutput.find(params[:id])
-    @system = System.find_authorized_system(@digital_output.base_station.system_id, current_user.id)
-    if @system.nil?
-      @digital_output = nil
-    end
-
     if @digital_output.transient_control_block
       @digital_output.transient_control_block.destroy
     end
 
-    t = Time.now
-    if @digital_output.base_station.timezone and @digital_output.base_station.timezone != ""
-      tz = TZInfo::Timezone.get(@digital_output.base_station.timezone)
-      t = tz.utc_to_local(t)
-    end
-    @digital_output.transient_control_block = ControlBlock.create(
-      :minute => t.min,
-      :hour => t.hour,
-      :day => t.day,
-      :month => t.month,
-      :year => t.year,
-      :weekday => nil,
+    t = @digital_output.base_station.current_time
+    transient_block = ControlBlock.new(
       :len => params[:minutes].to_i,
       :state => true,
       :base_station_id => @digital_output.base_station_id,
       :digital_output_id => @digital_output.id )
+    transient_block.set_start_time(t)
+    transient_block.save!
+    @digital_output.transient_control_block = transient_block
     @digital_output.save!
 
     redirect_to digital_output_url(:id => @digital_output.id, :minutes => params[:minutes]) 
@@ -82,11 +125,6 @@ class DigitalOutputsController < ApplicationController
   end
 
   def index
-    @base_station = BaseStation.find(params[:base_station_id])
-    @system = System.find_authorized_system(@base_station.system_id, current_user.id)
-    if @system.nil?
-      @base_station = nil
-    end
     @digital_outputs = DigitalOutput.find(:all,
       :include => [ :type ],
       :conditions => [ "base_station_id = ?", @base_station.id ] )
@@ -99,6 +137,24 @@ class DigitalOutputsController < ApplicationController
       redirect_to account_url
     else
       render :action => :edit
+    end
+  end
+
+  private
+  def load_digital_output
+    @digital_output = DigitalOutput.find(params[:id])
+    @system = System.find_authorized_system(@digital_output.base_station.system_id, current_user.id)
+    if @system.nil?
+      @digital_output = nil
+    end
+    if @digital_output and @digital_output.transient_control_block
+      cb = @digital_output.transient_control_block
+      t = @digital_output.base_station.current_time
+      if cb.current_end_time < t
+        cb.destroy
+        @digital_output.transient_control_block = nil
+        @digital_output.save
+      end
     end
   end
 end
