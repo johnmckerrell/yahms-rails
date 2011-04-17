@@ -1,6 +1,6 @@
 class DigitalOutputsController < ApplicationController
   before_filter :require_user
-  before_filter :load_digital_output, :except => [ :new, :create ]
+  before_filter :load_digital_output, :except => [ :new, :create, :index ]
   
   def new
     @digital_output = DigitalOutput.new
@@ -125,6 +125,11 @@ class DigitalOutputsController < ApplicationController
   end
 
   def index
+    @base_station = BaseStation.find(params[:base_station_id]) 
+    @system = System.find_authorized_system(@base_station.system_id, current_user.id) 
+    if @system.nil? 
+        @base_station = nil 
+    end
     @digital_outputs = DigitalOutput.find(:all,
       :include => [ :type ],
       :conditions => [ "base_station_id = ?", @base_station.id ] )
