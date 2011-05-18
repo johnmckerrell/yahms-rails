@@ -1,0 +1,28 @@
+<div class="control_panel">
+  <div class="analog_inputs">
+  <h3>Analog Inputs</h3>
+    <ul>
+      <% @base_station.analog_inputs.each do |analog_input|
+        html = analog_input_widget analog_input
+        if html and html != ""
+          html = "<li>#{html}</li>"
+        end
+        %><%=html%>
+      <% end -%>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="digital_outputs">
+    <h3>Digital Outputs</h3>
+    <ul>
+      <% @base_station.digital_outputs.each do |digital_output|
+        html = digital_output_widget digital_output
+        if html and html != ""
+          html = "<li>#{html}</li>"
+        end
+        %><%=html%>
+      <% end -%>
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>

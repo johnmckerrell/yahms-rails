@@ -4,6 +4,18 @@ class DigitalOutput < ActiveRecord::Base
   has_many :control_blocks
   belongs_to :transient_control_block, :class_name => 'ControlBlock', :foreign_key => 'transient_control_block_id'
 
+  def self.default_plus_times
+    [ [ "2 hours", "180" ], 
+      #[ "90 minutes", "90" ],
+      [ "1 hour", "60" ],
+      [ "half an hour", "30" ],
+      [ "15 minutes", "15" ] ]
+  end
+
+  def self.default_plus_time
+    "60"
+  end
+
   def valid_day_blocks(t)
     control_blocks = self.control_blocks.find(:all, :conditions => { :deactivated_at => nil })
     valid_blocks = []

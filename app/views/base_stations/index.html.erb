@@ -16,7 +16,6 @@
     <td><%= h(bs.name) %></td>
     <td><%= h(bs.mac_address) %></td>
     <td><%= h(bs.timezone) %></td>
-    <td><%= link_to "Digital Outputs", digital_outputs_path(:base_station_id => bs.id) %></td>
-    <td><%= link_to "Analog Inputs", analog_inputs_path(:base_station_id => bs.id) %></td>
+    <td><%= link_to "Control Panel", base_station_path(:id => bs.id) %></td>
   </tr>
 <% end %>

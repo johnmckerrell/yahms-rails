@@ -14,7 +14,7 @@
 <div class="plus_time">
 <% form_tag plus_time_digital_output_path(@digital_output.id), :method => :put do %>
   <select name="minutes">
-    <%= options_for_select [ [ "2 hours", "180" ], [ "90 minutes", "90" ], [ "1 hours", "60" ], [ "half an hour", "30" ], [ "15 minutes", "15" ] ], params[:minutes] ? params[:minutes] : 60 %>
+    <%= options_for_select [ [ "2 hours", "120" ], [ "90 minutes", "90" ], [ "1 hours", "60" ], [ "half an hour", "30" ], [ "15 minutes", "15" ] ], params[:minutes] ? params[:minutes] : 60 %>
   </select>
   <button type="submit">Add Time</button>
 <% end %>

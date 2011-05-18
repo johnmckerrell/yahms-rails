@@ -1,12 +1,12 @@
 class BaseStationsController < ApplicationController
   before_filter :require_user
+  before_filter :load_base_station, :only => [ :show, :edit, :update ]
   
   def new
     @base_station = User.new
   end
   
   def create
-    #@base_station = BaseStation.new(params[:base_station])
     if @base_station.save
       flash[:notice] = "Base Station created!"
       redirect_back_or_default account_url
@@ -16,11 +16,9 @@ class BaseStationsController < ApplicationController
   end
   
   def show
-    #@base_station = BaseStation.find(params[:id])
   end
 
   def edit
-    #@base_station = BaseStation.find(params[:id])
   end
   
   def index
@@ -30,7 +28,6 @@ class BaseStationsController < ApplicationController
   end
 
   def update
-    #@base_station = BaseStation.find(params[:id])
     if @base_station.update_attributes(params[:base_station])
       flash[:notice] = "Base Station updated!"
       redirect_to account_url
@@ -38,4 +35,14 @@ class BaseStationsController < ApplicationController
       render :action => :edit
     end
   end
+
+  private
+  def load_base_station
+    @base_station = BaseStation.find(params[:id])
+    @system = System.find_authorized_system(@base_station.system_id, current_user.id)
+    if @system.nil?
+      @base_station = nil
+    end
+  end
+
 end
