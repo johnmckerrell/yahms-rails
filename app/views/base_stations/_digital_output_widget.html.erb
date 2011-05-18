@@ -17,7 +17,7 @@
       <li class="plustime plus<%=plus_time[1]%>">
       <% form_tag plus_time_digital_output_path(@digital_output.id), :method => :put do %>
         <%= hidden_field_tag "minutes", plus_time[1] %>
-        <button type="submit"><%= plus_time[0] %></button>
+        <button type="submit">+ <%= plus_time[0] %></button>
       <% end %>
       </li>
     <% end %>
