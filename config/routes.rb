@@ -47,4 +47,5 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :digital_outputs, :member => { :plus_time => :put, :advance => :put }
   map.resource :user_session
   map.root :controller => "user_sessions", :action => "new"
+  map.logout '/logout', :controller => 'user_sessions', :action => 'destroy'
 end
