@@ -1,0 +1,4 @@
+<div class="widget analog_input temperature">
+  <h4><%= @analog_input.name %> <span class="address">(<%= @analog_input.address %>)</span></h4>
+  <div class="current_value"><%=@analog_input_latest_value[:human_value].to_f.round(1)%><span class="units">&deg;C</span></div>
+</div>

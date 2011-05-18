@@ -1,7 +1,12 @@
 body {
+    position: absolute;
     background: black;
     color: white;
     margin: 5px;
+}
+
+h1 {
+    text-align: center;
 }
 
 a,
@@ -48,7 +53,7 @@ ul.systems li a {
     float: left;
 }
 
-.widget.digital_output {
+.widget {
     width: 276px;
     margin: 5px;
     padding: 10px;
@@ -104,4 +109,14 @@ ul.systems li a {
     height: 50px;
     margin: 0 5px 5px;
     font-size: 15px;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.widget.analog_input.temperature .current_value {
+    text-align: right;
+    line-height: 100%;
+    font-size: 500%;
+    font-family: Garamond, serif;
+    padding-right: 10px;
 }
