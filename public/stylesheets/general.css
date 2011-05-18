@@ -113,10 +113,14 @@ ul.systems li a {
     cursor: pointer;
 }
 
+.widget.analog_input {
+    width: 173px;
+}
+
 .widget.analog_input.temperature .current_value {
     text-align: right;
     line-height: 100%;
-    font-size: 500%;
+    font-size: 360%;
     font-family: Garamond, serif;
     padding-right: 10px;
 }
