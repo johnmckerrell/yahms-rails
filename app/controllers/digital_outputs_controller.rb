@@ -94,7 +94,7 @@ class DigitalOutputsController < ApplicationController
         @digital_output.save!
       end
     end
-    redirect_to digital_output_url(:id => @digital_output.id, :minutes => params[:minutes]) 
+    redirect_to(request.referer || digital_output_url(:id => @digital_output.id))
   end
 
   def plus_time
@@ -113,7 +113,7 @@ class DigitalOutputsController < ApplicationController
     @digital_output.transient_control_block = transient_block
     @digital_output.save!
 
-    redirect_to digital_output_url(:id => @digital_output.id, :minutes => params[:minutes]) 
+    redirect_to(request.referer || digital_output_url(:id => @digital_output.id))
 
     # If plus time is done and the time will make it be on for less than the current control block would do, then ignore it
 
