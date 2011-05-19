@@ -113,8 +113,10 @@ ul.systems li a {
     cursor: pointer;
 }
 
-.widget.analog_input {
-    width: 173px;
+@media (min-width:500px) {
+    .widget.analog_input {
+        width: 173px;
+    }
 }
 
 .widget.analog_input.temperature .current_value {
