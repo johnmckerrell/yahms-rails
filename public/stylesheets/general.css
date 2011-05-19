@@ -53,6 +53,10 @@ ul.systems li a {
     float: left;
 }
 
+.current_time {
+    text-align: center;
+}
+
 .widget {
     width: 276px;
     margin: 5px;
