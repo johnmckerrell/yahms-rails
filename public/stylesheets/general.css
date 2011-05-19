@@ -126,3 +126,9 @@ ul.systems li a {
     font-family: Garamond, serif;
     padding-right: 10px;
 }
+
+.widget.analog_input.temperature .latest_time span {
+    display: block;
+    text-align: right;
+    
+}
