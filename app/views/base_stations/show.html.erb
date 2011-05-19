@@ -4,7 +4,7 @@ if @base_station.timezone and @base_station.timezone != ""
   tz = TZInfo::Timezone.get(@base_station.timezone)
   t = tz.utc_to_local(t)
 end
-time_str = tz.utc_to_local(Time.now).to_s.gsub(/ ?UTC/,'')
+time_str = tz.utc_to_local(Time.now).to_s.gsub(/( ?UTC| ?\+0000)/,'')
 %>
 <p class="current_time">Page load time: <%=time_str%></p>
 <div class="control_panel">
