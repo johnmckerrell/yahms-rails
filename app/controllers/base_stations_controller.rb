@@ -16,6 +16,7 @@ class BaseStationsController < ApplicationController
   end
   
   def show
+    @page_title = "#{@base_station.system.name}: #{@base_station.name} Control Panel"
   end
 
   def edit
