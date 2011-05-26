@@ -20,5 +20,5 @@ production:
   adapter: mysql
   database: yahms_net_production
   username: yahms
-  password: dD31e27p[:BJ
+  password: 
 
