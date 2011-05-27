@@ -32,7 +32,9 @@ ul.systems li {
     list-style: none;
 }
 
-ul.systems li a {
+ul.systems li > span,
+ul.systems li > form,
+ul.systems li > a {
     display: block;
     font-size: 200%;
     padding: 20px;
