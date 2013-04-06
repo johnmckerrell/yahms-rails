@@ -55,4 +55,35 @@ YahmsNetDevelopment::Application.routes.draw do
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
+
+
+  match 'api/c/:mac/:version/:timestamp' => 'api#conf', :as => :api_config, :format => :text
+  match 'api/s/:mac/:version' => 'api#submit', :as => :api_submit
+  resource :account, :controller => "users"
+  resources :users
+  resources :systems
+  resources :base_stations
+  resources :analog_inputs
+  resources :digital_outputs
+  resources :digital_outputs do
+    
+    member do
+      post :advance
+      post :plus_time
+    end
+  
+  end
+
+  resources :systems do
+  
+    member do
+      post :revoke_access
+      post :grant_access
+    end
+    
+  end
+
+  resource :user_session
+  match '/' => 'user_sessions#new'
+  match '/logout' => 'user_sessions#destroy', :as => :logout
 end

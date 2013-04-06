@@ -1,6 +1,7 @@
 class System < ActiveRecord::Base
   has_many :subscriptions
   has_many :base_stations
+  attr_accessible :name
 
   def self.find_authorized_systems(user_id)
     find(:all,

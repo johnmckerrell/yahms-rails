@@ -36,3 +36,7 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'authlogic'
+gem 'activerecord-mysql-adapter'
+gem 'mysql2'
