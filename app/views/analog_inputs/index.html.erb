@@ -1,0 +1,20 @@
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+<% if @analog_inputs.length == 0 %>
+  <tr>
+    <td colspan="100" class="noresults">No Analog Inputs found</td>
+  </tr>
+<% end %>
+<% @analog_inputs.each do |ai| %>
+  <tr>
+    <td><%= link_to h(ai.name), analog_input_path(ai.id) %></td>
+    <td><%= h(ai.address) %></td>
+    <td><%= h(ai.type.title) %></td>
+  </tr>
+<% end %>

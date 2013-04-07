@@ -1,0 +1,11 @@
+.svn
+.*.sw?
+log
+tmp
+*.log
+schema.rb
+*.sqlite*
+*~
+seeds.rb
+*.sql*
+*.autosave

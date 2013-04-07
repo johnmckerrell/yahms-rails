@@ -1,0 +1,40 @@
+<ul>
+  <li>Name: <%=h(@analog_input.name)%></li>
+  <li>Address: <%=h(@analog_input.address)%></li>
+  <li>Size: <%=h(@analog_input.size)%></li>
+  <li>Reference: <%=h(@analog_input.reference)%></li>
+  <li>Type: <%=h(@analog_input.type.title)%> (<%=h(@analog_input.type.code)%>)</li>
+</ul>
+
+<h3>Recent values</h3>
+<table>
+  <thead>
+    <th>Value</th>
+    <th>Original</th>
+    <th>Created</th>
+  </thead>
+  <tbody>
+<%
+  tz = Time.zone
+  if @analog_input.base_station.timezone and @analog_input.base_station.timezone != ""
+    tz = TZInfo::Timezone.get(@analog_input.base_station.timezone)
+                  t = tz.utc_to_local(t)
+  end
+  if @logs.length == 0
+%>
+    <tr>
+      <td colspan="100" class="noresults">No log entries yet</td>
+    </tr>
+<%
+  end
+  @logs.each do |l|
+%>
+  <tr>
+    <td><%=l[:human_value].to_f.round(1)%><%=@analog_input.type.code == 'temperature' ? '&deg;C' : ''%></td>
+    <td><%=l[:value]%></td>
+    <td><%=tz.utc_to_local(l[:created_at]).to_s.gsub(/ ?UTC/,'')%></td>
+<%
+  end
+%>
+  </tbody>
+</table>

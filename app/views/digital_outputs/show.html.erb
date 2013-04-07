@@ -1,0 +1,21 @@
+<ul>
+  <li>Name: <%=h(@digital_output.name)%></li>
+  <li>Address: <%=h(@digital_output.address)%></li>
+  <li>Current State: <%=@digital_output.current_state ? "ON" : "OFF" %></li>
+  <li>Transient Control Block: <%= @digital_output.transient_control_block ? @digital_output.transient_control_block.to_api : "- none -" %></li>
+</ul>
+
+<h3>Actions</h3>
+<div class="advance">
+<% form_tag advance_digital_output_path(@digital_output.id), :method => :put do %>
+  <button type="submit">Advance</button>
+<% end %>
+</div>
+<div class="plus_time">
+<% form_tag plus_time_digital_output_path(@digital_output.id), :method => :put do %>
+  <select name="minutes">
+    <%= options_for_select [ [ "2 hours", "120" ], [ "90 minutes", "90" ], [ "1 hours", "60" ], [ "half an hour", "30" ], [ "15 minutes", "15" ] ], params[:minutes] ? params[:minutes] : 60 %>
+  </select>
+  <button type="submit">Add Time</button>
+<% end %>
+</div>

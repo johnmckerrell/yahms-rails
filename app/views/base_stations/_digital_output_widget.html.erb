@@ -1,0 +1,26 @@
+<% state = @digital_output.current_state ? "ON" : "OFF" %>
+<div class="widget digital_output <%=state%>">
+  <h4><%= @digital_output.name %> <span class="address">(<%= @digital_output.address %>)</span> <span class="currentState"><%=state%></span></h4>
+  <ul class="control_blocks">
+    <li class="current">
+    </li>
+    <li class="next">
+    </li>
+  </ul>
+  <ul class="actions">
+    <li class="advance">
+      <% form_tag advance_digital_output_path(@digital_output.id), :method => :put do %>
+        <button type="submit">Advance</button>
+      <% end %>
+    </li>
+    <% DigitalOutput.default_plus_times.each do |plus_time| %>
+      <li class="plustime plus<%=plus_time[1]%>">
+      <% form_tag plus_time_digital_output_path(@digital_output.id), :method => :put do %>
+        <%= hidden_field_tag "minutes", plus_time[1] %>
+        <button type="submit">+ <%= plus_time[0] %></button>
+      <% end %>
+      </li>
+    <% end %>
+  </ul>
+  <div class="clear"></div>
+</div>

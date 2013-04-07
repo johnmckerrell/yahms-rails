@@ -1,0 +1,14 @@
+<ul class="systems">
+<% if @systems.length == 0 %>
+  <li class="noresults"><span>No systems found</span></li>
+<% end %>
+<% @systems.each do |s| %>
+  <li><%= link_to h(s.name), base_stations_path(:system_id => s.id) %></li>
+<% end %>
+  <li>
+    <% form_for System.new do |f| %>
+    New System: <%= f.text_field :name %>
+    <button type="submit">Create</button>
+    <% end %>
+  </li>
+</ul>

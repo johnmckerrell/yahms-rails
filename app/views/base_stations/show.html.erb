@@ -1,0 +1,37 @@
+<%
+tz = Time.zone
+if @base_station.timezone and @base_station.timezone != ""
+  tz = TZInfo::Timezone.get(@base_station.timezone)
+  t = tz.utc_to_local(t)
+end
+time_str = tz.utc_to_local(Time.now).to_s.gsub(/( ?UTC| ?\+0000)/,'')
+%>
+<p class="current_time">Page load time: <%=time_str%></p>
+<div class="control_panel">
+  <div class="analog_inputs">
+  <h3>Analog Inputs</h3>
+    <ul>
+      <% @base_station.analog_inputs.all(:conditions => "deactivated_at IS NULL").each do |analog_input|
+        html = analog_input_widget analog_input
+        if html and html != ""
+          html = "<li>#{html}</li>"
+        end
+        %><%=html%>
+      <% end -%>
+    </ul>
+    <div class="clear"></div>
+  </div>
+  <div class="digital_outputs">
+    <h3>Digital Outputs</h3>
+    <ul>
+      <% @base_station.digital_outputs.all(:conditions => "deactivated_at IS NULL").each do |digital_output|
+        html = digital_output_widget digital_output
+        if html and html != ""
+          html = "<li>#{html}</li>"
+        end
+        %><%=html%>
+      <% end -%>
+    </ul>
+    <div class="clear"></div>
+  </div>
+</div>
