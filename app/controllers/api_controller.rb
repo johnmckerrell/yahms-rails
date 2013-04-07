@@ -2,7 +2,6 @@ class ApiController < ApplicationController
   skip_before_filter :verify_authenticity_token
   layout false
   def conf
-    headers['Content-type'] = 'text/plain'
     @base_station = BaseStation.find_by_mac_address(params[:mac])
     if @base_station
       @analog_inputs = AnalogInput.find( :all,
