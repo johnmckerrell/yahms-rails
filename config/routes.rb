@@ -68,8 +68,8 @@ YahmsNetDevelopment::Application.routes.draw do
   resources :digital_outputs do
     
     member do
-      post :advance
-      post :plus_time
+      put :advance
+      put :plus_time
     end
   
   end
@@ -77,8 +77,8 @@ YahmsNetDevelopment::Application.routes.draw do
   resources :systems do
   
     member do
-      post :revoke_access
-      post :grant_access
+      put :revoke_access
+      put :grant_access
     end
     
   end
