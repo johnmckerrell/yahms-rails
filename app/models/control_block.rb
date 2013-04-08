@@ -1,6 +1,7 @@
 class ControlBlock < ActiveRecord::Base
   belongs_to :base_station
   belongs_to :digital_output
+  attr_accessible :len, :state, :base_station_id, :digital_output_id
 
   # Get the next start time for this block
   # the block will have been checked for day already
@@ -70,12 +71,12 @@ class ControlBlock < ActiveRecord::Base
   end
 
   def set_start_time(t)
-    update_attributes( :minute => t.min,
-      :hour => t.hour,
-      :day => t.day,
-      :month => t.month,
-      :year => t.year,
-      :weekday => nil )
+    self.minute = t.min
+    self.hour = t.hour
+    self.day = t.day
+    self.month = t.month
+    self.year = t.year
+    self.weekday = nil
   end
 
   def set_start_and_end_time(start_time, end_time)
