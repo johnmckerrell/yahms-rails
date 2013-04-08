@@ -4,6 +4,9 @@
 # up again.  This script gets executed directly, so it could be python, php,
 # ruby, etc.
 
+# Try to force UTC, ideally for MySQL and Rails (and Node)
+export TZ='UTC'
+
 # Run db:migrate
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 bundle exec rake db:migrate RAILS_ENV="production"
