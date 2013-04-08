@@ -3,6 +3,7 @@ class DigitalOutput < ActiveRecord::Base
   belongs_to :base_station
   has_many :control_blocks
   belongs_to :transient_control_block, :class_name => 'ControlBlock', :foreign_key => 'transient_control_block_id'
+  attr_accessible :address, :name, :base_station_id, :type_id
 
   def self.default_plus_times
     [ [ "2 hours", "180" ], 

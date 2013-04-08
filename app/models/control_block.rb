@@ -1,6 +1,7 @@
 class ControlBlock < ActiveRecord::Base
   belongs_to :base_station
   belongs_to :digital_output
+  attr_accessible :len, :state, :base_station_id, :digital_output_id
 
   # Get the next start time for this block
   # the block will have been checked for day already

@@ -24,8 +24,7 @@ class BaseStationsController < ApplicationController
   
   def index
     @system = System.find_authorized_system(params[:system_id], current_user.id)
-    @base_stations = BaseStation.find(:all,
-      :conditions => [ "system_id = ?", @system.id ] )
+    @base_stations = BaseStation.where([ "system_id = ?", @system.id ] )
   end
 
   def update

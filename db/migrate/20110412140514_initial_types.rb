@@ -1,6 +1,6 @@
 class InitialTypes < ActiveRecord::Migration
-  class DigitalOutputType < ActiveRecord::Base; end
-  class AnalogInputType < ActiveRecord::Base; end
+  class DigitalOutputType < ActiveRecord::Base; attr_accessible :code, :title; end
+  class AnalogInputType < ActiveRecord::Base; attr_accessible :code, :title; end
   def self.up
     DigitalOutputType.create( :code => "centralheating", :title => "Central Heating System")
     DigitalOutputType.create( :code => "lighting", :title => "Lighting")

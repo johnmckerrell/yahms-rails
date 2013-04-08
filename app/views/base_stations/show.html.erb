@@ -16,7 +16,7 @@ time_str = tz.utc_to_local(Time.now).to_s.gsub(/( ?UTC| ?\+0000)/,'')
         if html and html != ""
           html = "<li>#{html}</li>"
         end
-        %><%=html%>
+        %><%=raw(html)%>
       <% end -%>
     </ul>
     <div class="clear"></div>
@@ -29,7 +29,7 @@ time_str = tz.utc_to_local(Time.now).to_s.gsub(/( ?UTC| ?\+0000)/,'')
         if html and html != ""
           html = "<li>#{html}</li>"
         end
-        %><%=html%>
+        %><%=raw(html)%>
       <% end -%>
     </ul>
     <div class="clear"></div>

@@ -14,7 +14,7 @@
         <td><%= h(s.access_level) %></td>
         <td>
           <% if s.user != @current_user %>
-            <% form_tag revoke_access_system_url(@system.id), :method => :post do %>
+            <%= form_tag revoke_access_system_url(@system.id), :method => :post do %>
               <%= hidden_field_tag :login, s.user.login %>
               <button type="submit">Revoke Access</button>
             <% end %>
@@ -27,7 +27,7 @@
           Grant access to new user:
         </th>
       </tr>
-      <% form_tag grant_access_system_url(@system.id), :method => :post do %>
+      <%= form_tag grant_access_system_url(@system.id), :method => :post do %>
       <tr>
         <td><%= text_field_tag :login %></td>
         <td><%= select_tag :access_level, options_for_select( [ [ "Admin", "admin" ], [ "Read Only", "readonly" ] ] ) %></td>
