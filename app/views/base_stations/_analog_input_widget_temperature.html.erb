@@ -4,11 +4,18 @@ if @analog_input.base_station.timezone and @analog_input.base_station.timezone !
   tz = TZInfo::Timezone.get(@analog_input.base_station.timezone)
   t = tz.utc_to_local(t)
 end
-time_str = time_ago_in_words(@analog_input_latest_value[:created_at])+' ago'
+if @analog_input_latest_value
+  time_str = time_ago_in_words(@analog_input_latest_value[:created_at])+' ago'
+  value = @analog_input_latest_value[:human_value].to_f.round(1)
+else
+  time_str = 'Not reported yet'
+  value = '-'
+end
+
 #time_str = tz.utc_to_local(@analog_input_latest_value[:created_at]).to_s.gsub(/ ?UTC/,'')
 %>
 <div class="widget analog_input temperature">
   <h4><%= @analog_input.name %> <span class="address">(<%= @analog_input.address %>)</span></h4>
-  <div class="current_value"><%=@analog_input_latest_value[:human_value].to_f.round(1)%><span class="units">&deg;C</span></div>
+  <div class="current_value"><%=value%><span class="units">&deg;C</span></div>
   <div class="latest_time">Last Reported: <span><%=time_str%></span></div>
 </div>
