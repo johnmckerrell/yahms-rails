@@ -6,7 +6,7 @@ class BaseStation < ActiveRecord::Base
   attr_accessible :name, :timezone, :mac_address, :system_id
 
   def current_time
-    t = Time.now
+    t = Time.now.utc
     tz = nil
     if timezone and timezone != ""
       tz = TZInfo::Timezone.get(timezone)
