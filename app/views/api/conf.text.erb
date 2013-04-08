@@ -28,7 +28,7 @@ end
 
 if @base_station.timezone and @base_station.timezone != ""
   tz = TZInfo::Timezone.get(@base_station.timezone)
-  now = Time.now
+  now = Time.now.utc
   local = tz.utc_to_local(now)
   offset = ( local.to_i - now.to_i ) / 60
 -%>
