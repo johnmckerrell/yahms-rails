@@ -10,4 +10,5 @@ export TZ='UTC'
 # Run db:migrate
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 bundle exec rake db:migrate RAILS_ENV="production"
+touch tmp/restart.txt
 popd > /dev/null
