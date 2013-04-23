@@ -53,4 +53,18 @@ class BaseStation < ActiveRecord::Base
       end
     end
   end
+
+  def config_updated!
+    begin
+      self.config_updated_at = Time.now.utc
+      self.save!
+      uri = URI.parse("#{LIVE_YAHMS_NET}/u/#{self.mac_address}")
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = uri.scheme == 'https'
+      request = Net::HTTP::Get.new(uri.request_uri)
+      res = http.request(request)
+    rescue Exception => e
+      puts "Failed logging an update to config: #{e}"
+    end
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110414121635) do
+ActiveRecord::Schema.define(:version => 20130422161222) do
 
   create_table "analog_input_logs", :force => true do |t|
     t.integer  "value"
@@ -45,14 +45,15 @@ ActiveRecord::Schema.define(:version => 20110414121635) do
   add_index "analog_inputs", ["base_station_id", "deactivated_at", "type_id"], :name => "base_station_id"
 
   create_table "base_stations", :force => true do |t|
-    t.string   "name",                     :null => false
-    t.integer  "xbee_rx_pin", :limit => 1
-    t.integer  "xbee_tx_pin", :limit => 1
+    t.string   "name",                           :null => false
+    t.integer  "xbee_rx_pin",       :limit => 1
+    t.integer  "xbee_tx_pin",       :limit => 1
     t.string   "timezone"
     t.string   "mac_address"
-    t.integer  "system_id",                :null => false
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.integer  "system_id",                      :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.datetime "config_updated_at"
   end
 
   add_index "base_stations", ["mac_address"], :name => "index_base_stations_on_mac_address", :unique => true

@@ -4,12 +4,16 @@ class ApiController < ApplicationController
   def conf
     @base_station = BaseStation.find_by_mac_address(params[:mac])
     if @base_station
-      @analog_inputs = AnalogInput.find( :all,
-        :conditions => [ "base_station_id = ? AND deactivated_at IS NULL", @base_station.id ] )
-      @digital_outputs = DigitalOutput.find( :all,
-        :conditions => [ "base_station_id = ? AND deactivated_at IS NULL", @base_station.id ] )
-      @control_blocks = ControlBlock.find( :all,
-        :conditions => [ "base_station_id = ? AND deactivated_At IS NULL", @base_station.id ] )
+      if @base_station.config_updated_at and params[:timestamp].to_i > @base_station.config_updated_at.to_i
+        render :nothing => true, :status => 304
+      else
+        @analog_inputs = AnalogInput.find( :all,
+          :conditions => [ "base_station_id = ? AND deactivated_at IS NULL", @base_station.id ] )
+        @digital_outputs = DigitalOutput.find( :all,
+          :conditions => [ "base_station_id = ? AND deactivated_at IS NULL", @base_station.id ] )
+        @control_blocks = ControlBlock.find( :all,
+          :conditions => [ "base_station_id = ? AND deactivated_At IS NULL", @base_station.id ] )
+      end
     end
   end
 
