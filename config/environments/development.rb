@@ -35,3 +35,5 @@ YahmsNetDevelopment::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 end
+
+LIVE_YAHMS_NET="http://localhost:8889"
