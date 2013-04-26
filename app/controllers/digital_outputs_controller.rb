@@ -94,6 +94,7 @@ class DigitalOutputsController < ApplicationController
         @digital_output.save!
       end
     end
+    @digital_output.base_station.config_updated!
     redirect_to(request.referer || digital_output_url(:id => @digital_output.id))
   end
 
@@ -112,6 +113,8 @@ class DigitalOutputsController < ApplicationController
     transient_block.save!
     @digital_output.transient_control_block = transient_block
     @digital_output.save!
+
+    @digital_output.base_station.config_updated!
 
     redirect_to(request.referer || digital_output_url(:id => @digital_output.id))
 
