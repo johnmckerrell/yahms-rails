@@ -32,7 +32,9 @@ if @base_station.timezone and @base_station.timezone != ""
   local = tz.utc_to_local(now)
   offset = ( local.to_i - now.to_i ) / 60
 -%>
-S:<%=offset%>,<%=@base_station.config_updated_at.to_i%>
+S:<%=offset%>
 <%
 end
 -%>
+T:<%=@base_station.config_updated_at.to_i%>,<%=Time.now.utc.to_i%>
+!
