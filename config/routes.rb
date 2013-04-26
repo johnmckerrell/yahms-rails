@@ -86,4 +86,5 @@ YahmsNetDevelopment::Application.routes.draw do
   resource :user_session
   match '/' => 'user_sessions#new'
   match '/logout' => 'user_sessions#destroy', :as => :logout
+  match '/mf' => 'user_sessions#makerfaire'
 end

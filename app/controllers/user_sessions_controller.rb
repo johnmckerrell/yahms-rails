@@ -1,7 +1,16 @@
 class UserSessionsController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create]
+  before_filter :require_no_user, :only => [:new, :create, :makerfaire]
   before_filter :require_user, :only => :destroy
   
+  def makerfaire
+    @user_session = UserSession.new(:login=>'makerfaire',:password=>'mosi')
+    if @user_session.save
+      redirect_to '/base_stations/4'
+    else
+      redirect_back_or_default systems_url
+    end
+  end
+
   def new
     @user_session = UserSession.new
   end
