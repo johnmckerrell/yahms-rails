@@ -58,7 +58,7 @@ class BaseStation < ActiveRecord::Base
     begin
       self.config_updated_at = Time.now.utc
       self.save!
-      uri = URI.parse("#{LIVE_YAHMS_NET}/u/#{self.mac_address}")
+      uri = URI.parse("#{LIVE_YAHMS_NET}/api/u/#{self.mac_address}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == 'https'
       request = Net::HTTP::Get.new(uri.request_uri)

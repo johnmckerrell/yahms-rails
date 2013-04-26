@@ -29,6 +29,7 @@ class BaseStationsController < ApplicationController
 
   def update
     if @base_station.update_attributes(params[:base_station])
+      @base_station.config_updated!
       flash[:notice] = "Base Station updated!"
       redirect_to account_url
     else
