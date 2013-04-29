@@ -1,5 +1,5 @@
 class BaseStationsController < ApplicationController
-  before_filter :require_user, :only => [ :new, :create, :edit, :update ]
+  before_filter :require_user, :only => [ :new, :create, :edit, :update, :show ]
   before_filter :load_base_station, :only => [ :show, :edit, :update ]
   
   def new
