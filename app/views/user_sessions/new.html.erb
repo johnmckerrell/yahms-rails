@@ -1,5 +1,7 @@
 <h1>Login</h1>
 
+<p><a href="/mf">For MakerFaire, click here.</a></p>
+
 <%= form_for @user_session, :as => :user_session, :url => user_session_path do |f| %>
   <% @user_session.errors.full_messages.each do |msg| %>
     <p><%= msg %></p>
