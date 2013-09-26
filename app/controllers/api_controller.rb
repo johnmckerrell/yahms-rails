@@ -14,13 +14,19 @@ class ApiController < ApplicationController
         @control_blocks = ControlBlock.find( :all,
           :conditions => [ "base_station_id = ? AND deactivated_At IS NULL", @base_station.id ] )
       end
+    else
+      render :nothing => true, :status => 404
     end
   end
 
   def submit
     @base_station = BaseStation.find_by_mac_address(params[:mac])
-    @base_station.handle_submissions(request.POST)
-    render :nothing => true
+    if @base_station
+      @base_station.handle_submissions(request.POST)
+      render :nothing => true
+    else
+      render :nothing => true, :status => 404
+    end
   end
 
   def test
